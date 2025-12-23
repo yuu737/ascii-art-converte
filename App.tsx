@@ -569,16 +569,13 @@ export default function App(): React.ReactNode {
         {/* Effect Grid */}
         <div className="p-1">
             <label className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 block px-2">スタイルを選択</label>
-            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-9 gap-2 sm:gap-3">
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-2 sm:gap-3">
                 <EffectButton label="アスキー" isActive={effect === 'ascii'} onClick={() => setEffect('ascii')} disabled={isProcessing} icon={<AsciiArtIcon className="w-6 h-6" />} />
                 <EffectButton label="背景透過" isActive={effect === 'transparency'} onClick={() => setEffect('transparency')} disabled={isProcessing} icon={<TransparentBgIcon className="w-6 h-6" />} />
+                <EffectButton label="アニメ原画" isActive={effect === 'genga'} onClick={() => setEffect('genga')} disabled={isProcessing} icon={<AnimationSketchIcon className="w-6 h-6" />} />
                 <EffectButton label="鉛筆画" isActive={effect === 'pencil'} onClick={() => setEffect('pencil')} disabled={isProcessing} icon={<PencilIcon className="w-6 h-6" />} />
                 <EffectButton label="8bit" isActive={effect === '8bit'} onClick={() => setEffect('8bit')} disabled={isProcessing} icon={<EightBitIcon className="w-6 h-6" />} />
                 <EffectButton label="モノクロ" isActive={effect === 'monochrome'} onClick={() => setEffect('monochrome')} disabled={isProcessing} icon={<MonochromeIcon className="w-6 h-6" />} />
-                <EffectButton label="シルエット" isActive={effect === 'silhouette'} onClick={() => setEffect('silhouette')} disabled={isProcessing} icon={<SilhouetteIcon className="w-6 h-6" />} />
-                <EffectButton label="線画" isActive={effect === 'lineart'} onClick={() => setEffect('lineart')} disabled={isProcessing} icon={<LineArtIcon className="w-6 h-6" />} />
-                <EffectButton label="セル画" isActive={effect === 'cel'} onClick={() => setEffect('cel')} disabled={isProcessing} icon={<CelShadingIcon className="w-6 h-6" />} />
-                <EffectButton label="アニメ原画" isActive={effect === 'genga'} onClick={() => setEffect('genga')} disabled={isProcessing} icon={<AnimationSketchIcon className="w-6 h-6" />} />
             </div>
         </div>
         
