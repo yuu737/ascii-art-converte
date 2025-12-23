@@ -278,6 +278,7 @@ export default function App(): React.ReactNode {
 
   const [eightBitPixelSize, setEightBitPixelSize] = useState(8);
   const [genericThreshold, setGenericThreshold] = useState(150);
+  const [gengaColorfulLines, setGengaColorfulLines] = useState(true);
 
   // Transparency Settings
   const [bgThreshold, setBgThreshold] = useState(90);
@@ -395,7 +396,7 @@ export default function App(): React.ReactNode {
             if (effect === 'pencil') applyPencilSketchEffect(ctx, canvas.width, canvas.height);
             else if (effect === '8bit') apply8BitEffect(ctx, canvas.width, canvas.height, eightBitPixelSize);
             else if (effect === 'cel') applyCelShadingEffect(ctx, canvas.width, canvas.height);
-            else if (effect === 'genga') applyGengaEffect(ctx, canvas.width, canvas.height, {outline: '#000000', shadow: '#555555', highlight: '#ffffff'}, true, genericThreshold);
+            else if (effect === 'genga') applyGengaEffect(ctx, canvas.width, canvas.height, {outline: gengaColorfulLines ? 'colorful' : '#000000', shadow: '#555555', highlight: '#ffffff'}, true, genericThreshold);
             else if (effect === 'silhouette') applySilhouetteEffect(ctx, canvas.width, canvas.height, genericThreshold);
             else if (effect === 'lineart') applyLineArtEffect(ctx, canvas.width, canvas.height, genericThreshold);
             else if (effect === 'transparency') {
@@ -413,7 +414,7 @@ export default function App(): React.ReactNode {
         setAsciiFrames([]);
     }
     setStatus('success');
-  }, [effect, asciiWidth, asciiInvertColors, asciiOutlineMode, asciiTransparentBg, eightBitPixelSize, genericThreshold, bgThreshold, isTransparentFormat, transparencyMode]);
+  }, [effect, asciiWidth, asciiInvertColors, asciiOutlineMode, asciiTransparentBg, eightBitPixelSize, genericThreshold, bgThreshold, isTransparentFormat, transparencyMode, gengaColorfulLines]);
 
   const handleVideoExtract = useCallback(async () => {
     if (!videoPreviewUrl || !videoRef.current || !canvasRef.current) return;
@@ -489,7 +490,7 @@ export default function App(): React.ReactNode {
         if (effect === 'pencil') applyPencilSketchEffect(ctx, canvas.width, canvas.height);
         else if (effect === '8bit') apply8BitEffect(ctx, canvas.width, canvas.height, eightBitPixelSize);
         else if (effect === 'cel') applyCelShadingEffect(ctx, canvas.width, canvas.height);
-        else if (effect === 'genga') applyGengaEffect(ctx, canvas.width, canvas.height, {outline: '#000000', shadow: '#555555', highlight: '#ffffff'}, true, genericThreshold);
+        else if (effect === 'genga') applyGengaEffect(ctx, canvas.width, canvas.height, {outline: gengaColorfulLines ? 'colorful' : '#000000', shadow: '#555555', highlight: '#ffffff'}, true, genericThreshold);
         else if (effect === 'silhouette') applySilhouetteEffect(ctx, canvas.width, canvas.height, genericThreshold);
         else if (effect === 'lineart') applyLineArtEffect(ctx, canvas.width, canvas.height, genericThreshold);
         else if (effect === 'transparency') {
@@ -504,7 +505,7 @@ export default function App(): React.ReactNode {
         setProcessedAsciiText('');
     }
     setStatus('success');
-  }, [imagePreviewUrl, effect, asciiWidth, asciiInvertColors, asciiOutlineMode, asciiTransparentBg, eightBitPixelSize, genericThreshold, bgThreshold, isTransparentFormat, transparencyMode]);
+  }, [imagePreviewUrl, effect, asciiWidth, asciiInvertColors, asciiOutlineMode, asciiTransparentBg, eightBitPixelSize, genericThreshold, bgThreshold, isTransparentFormat, transparencyMode, gengaColorfulLines]);
 
   useEffect(() => {
     if (isProcessing) return;
@@ -522,7 +523,7 @@ export default function App(): React.ReactNode {
   useEffect(() => { 
     if (imageFile && !isProcessing) handleImageEffect(); 
     if (originalFrames.length > 0 && !isProcessing) applyEffectOnFrames(originalFrames);
-  }, [imageFile, originalFrames, effect, asciiWidth, asciiInvertColors, asciiOutlineMode, asciiTransparentBg, eightBitPixelSize, genericThreshold, bgThreshold, transparencyMode]);
+  }, [imageFile, originalFrames, effect, asciiWidth, asciiInvertColors, asciiOutlineMode, asciiTransparentBg, eightBitPixelSize, genericThreshold, bgThreshold, transparencyMode, gengaColorfulLines]);
 
   const renderAdvancedSettings = () => (
     <div className="mt-6 p-5 bg-slate-50 rounded-xl border border-slate-200 text-sm animate-fade-in shadow-inner">
@@ -664,7 +665,20 @@ export default function App(): React.ReactNode {
                     </div>
                 )}
 
-                {(effect === 'genga' || effect === 'silhouette' || effect === 'lineart') && (
+                {effect === 'genga' && (
+                    <div className="space-y-6">
+                         <label className={`flex items-center gap-3 cursor-pointer p-3 rounded-lg border transition-all ${gengaColorfulLines ? 'bg-emerald-50 border-emerald-500 shadow-sm' : 'bg-white border-slate-200 hover:border-emerald-300'}`}>
+                            <input type="checkbox" checked={gengaColorfulLines} onChange={e => setGengaColorfulLines(e.target.checked)} className="w-5 h-5 accent-emerald-500 rounded cursor-pointer" />
+                            <span className={`text-sm font-bold ${gengaColorfulLines ? 'text-emerald-900' : 'text-slate-600'}`}>元の画像の色で線を描画</span>
+                        </label>
+                        <div>
+                            <span className="text-xs font-bold text-slate-500 block mb-2">エフェクト強度（しきい値）</span>
+                            <SimpleSlider min={genericThresholdBounds.min} max={genericThresholdBounds.max} value={genericThreshold} onChange={setGenericThreshold} disabled={isProcessing} />
+                        </div>
+                    </div>
+                )}
+
+                {(effect === 'silhouette' || effect === 'lineart') && (
                     <div>
                         <span className="text-xs font-bold text-slate-500 block mb-2">エフェクト強度（しきい値）</span>
                         <SimpleSlider min={genericThresholdBounds.min} max={genericThresholdBounds.max} value={genericThreshold} onChange={setGenericThreshold} disabled={isProcessing} />
