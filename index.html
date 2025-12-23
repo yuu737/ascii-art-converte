@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>アート変換スタジオ | 無料で画像を背景透過・アスキーアート・アニメ風に加工</title>
+    <meta name="description" content="ブラウザだけで完結する高機能画像処理ツール。動画のアニメ化、画像の背景透過、アスキーアート生成、線画抽出などが登録不要・無料で利用可能です。プライバシー重視の安心設計。" />
+    <meta name="keywords" content="背景透過, アスキーアート, 動画 アニメ化, 線画抽出, 画像加工, 無料ツール, ブラウザ, インストール不要" />
+    
+    <!-- OGP Tags for Social Media & SEO -->
+    <meta property="og:title" content="アート変換スタジオ - 瞬時に画像をアートへ" />
+    <meta property="og:description" content="動画や画像をパラパラ漫画、アスキーアート、線画、背景透過素材に変換する無料オンラインツール。" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://art-converter.app/" />
+    <meta property="og:image" content="https://placehold.co/1200x630/10b981/ffffff?text=Art+Converter" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Inter"', '"Noto Sans JP"', 'sans-serif'],
+            },
+            colors: {
+              emerald: {
+                50: '#ecfdf5',
+                100: '#d1fae5',
+                500: '#10b981',
+                600: '#059669',
+                900: '#064e3b',
+              }
+            }
+          }
+        }
+      }
+    </script>
+    
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@18.3.1",
+    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+    "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
+    "@google/genai": "https://esm.sh/@google/genai@0.14.0",
+    "@ffmpeg/ffmpeg": "https://esm.sh/@ffmpeg/ffmpeg@0.12.10",
+    "@ffmpeg/util": "https://esm.sh/@ffmpeg/util@0.12.1",
+    "react-dom/": "https://esm.sh/react-dom@18.3.1/",
+    "react/": "https://esm.sh/react@18.3.1/",
+    "dom": "https://esm.sh/dom@^0.0.3"
+  }
+}
+</script>
+<style>
+  body {
+    font-family: 'Inter', 'Noto Sans JP', sans-serif;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-in {
+    animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent; 
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #cbd5e1; 
+    border-radius: 99px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8; 
+  }
+
+  /* Slider Customization */
+  input[type=range] {
+    -webkit-appearance: none;
+    background: transparent;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: #10b981;
+    cursor: pointer;
+    margin-top: -6px;
+    box-shadow: 0 2px 6px rgba(16, 185, 129, 0.4);
+    transition: transform 0.1s;
+  }
+  input[type=range]::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+  }
+  input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 4px;
+    cursor: pointer;
+    background: #e2e8f0;
+    border-radius: 2px;
+  }
+  input[type=range]:focus {
+    outline: none;
+  }
+</style>
+  </head>
+  <body class="bg-white text-slate-800 antialiased selection:bg-emerald-100 selection:text-emerald-900">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
