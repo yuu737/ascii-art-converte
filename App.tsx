@@ -843,8 +843,11 @@ export default function App(): React.ReactNode {
         <Modal title="プライバシーポリシー" onClose={() => setActiveModal(null)}>
              <h4 className="font-bold text-slate-900">1. データは送信されません</h4>
              <p>当サービスは「クライアントサイド処理」を採用しています。あなたがアップロードした画像や動画ファイルが、当サービスのサーバーや外部の第三者に送信されることは一切ありません。すべての画像処理はお使いのデバイス（PC、スマホ）のブラウザ内で行われます。</p>
-             <h4 className="font-bold text-slate-900">2. Cookieとローカルストレージ</h4>
-             <p>サイトの利便性向上のため、ブラウザに一時的な設定情報を保存する場合がありますが、個人を特定する情報は取得しません。</p>
+             
+             <h4 className="font-bold text-slate-900 mt-4">2. 広告配信とCookieについて</h4>
+             <p>当サイトでは、第三者配信の広告サービス「Google Adsense（グーグルアドセンス）」を利用しています。</p>
+             <p className="mt-2">広告配信事業者は、ユーザーの興味に応じた広告を表示するためにCookie（クッキー）を使用することがあります。これには、ユーザーが当サイトや他のサイトに過去にアクセスした際の情報が含まれます。</p>
+             <p className="mt-2">ユーザーは、広告設定でパーソナライズ広告を無効にすることができます。また、<a href="https://www.aboutads.info" target="_blank" rel="noreferrer" className="text-emerald-600 underline">www.aboutads.info</a> にアクセスすれば、パーソナライズ広告に使われる第三者配信事業者の Cookie を無効にすることができます。</p>
         </Modal>
       )}
 
