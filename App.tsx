@@ -22,6 +22,9 @@ interface RangeBounds {
 // --- Translations ---
 const TRANSLATIONS = {
     en: {
+        meta_title: "Art Converter Studio | Free Image to ASCII, Transparent & Anime Style",
+        meta_description: "No registration required, completely free. Instantly convert images and videos into ASCII art, remove backgrounds, or create anime-style effects. Secure browser-based processing.",
+        
         app_title: "Art Converter Studio",
         hero_title_1: "Turn Images & Videos",
         hero_title_2: "Into Art Instantly.",
@@ -95,6 +98,9 @@ const TRANSLATIONS = {
         modal_close: "Close",
     },
     ja: {
+        meta_title: "アート変換スタジオ | 無料で画像を背景透過・アスキーアート・アニメ風に加工",
+        meta_description: "登録不要、完全無料。画像や動画をアスキーアート、背景透過、アニメ風に一瞬で変換できるWebツール。ブラウザ上で処理が完結するためプライバシーも安心です。",
+
         app_title: "アート変換スタジオ",
         hero_title_1: "画像と動画を、",
         hero_title_2: "一瞬でアートにする。",
@@ -457,7 +463,15 @@ const SimpleSlider: React.FC<RangeSliderProps> = ({ min, max, value, onChange, d
 
 // --- Main App Component ---
 export default function App(): React.ReactNode {
-  const [language, setLanguage] = useState<Language>('en');
+  // 自動検知ロジック: ブラウザ言語が日本語系なら'ja'、それ以外は'en'
+  const [language, setLanguage] = useState<Language>(() => {
+    if (typeof navigator !== 'undefined') {
+        const lang = navigator.language;
+        return lang.startsWith('ja') ? 'ja' : 'en';
+    }
+    return 'en';
+  });
+
   const [status, setStatus] = useState<Status>('idle');
   const [loadingText, setLoadingText] = useState('');
   const [progress, setProgress] = useState(0);
@@ -511,6 +525,27 @@ export default function App(): React.ReactNode {
 
   // Helper for Translation
   const t = (key: keyof typeof TRANSLATIONS['en']) => TRANSLATIONS[language][key] || key;
+
+  // --- Metadata Update Effect ---
+  useEffect(() => {
+    const texts = TRANSLATIONS[language];
+    document.title = texts.meta_title || "Art Converter Studio";
+    
+    // Update Meta Description
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) metaDesc.setAttribute('content', texts.meta_description || "");
+    
+    // Update OGP Title & Description
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) ogTitle.setAttribute('content', texts.app_title + (language === 'en' ? " - Turn Images into Art Instantly" : " - 瞬時に画像をアートへ"));
+
+    const ogDesc = document.querySelector('meta[property="og:description"]');
+    if (ogDesc) ogDesc.setAttribute('content', texts.meta_description || "");
+
+    // Update html lang attribute
+    document.documentElement.lang = language;
+  }, [language]);
+
 
   // --- Logic Handlers ---
   const handleFileSelect = (file: File | null) => {
