@@ -5,7 +5,7 @@ import { Dropzone } from './components/Dropzone';
 import { FlipbookViewer } from './FlipbookViewer';
 import { AsciiPlayer } from './AsciiPlayer';
 import { Loader } from './Loader';
-import { DownloadIcon, FilmIcon, SparklesIcon, XCircleIcon, MonochromeIcon, PencilIcon, PhotoIcon, CelShadingIcon, AnimationSketchIcon, ChevronDownIcon, EightBitIcon, AsciiArtIcon, ClipboardIcon, SilhouetteIcon, TransparentBgIcon, ImageIcon, PlayIcon, PauseIcon, LineArtIcon, CheckIcon } from './Icons';
+import { DownloadIcon, SparklesIcon, XCircleIcon, MonochromeIcon, PencilIcon, PhotoIcon, AnimationSketchIcon, EightBitIcon, AsciiArtIcon, ClipboardIcon, SilhouetteIcon, TransparentBgIcon, PlayIcon, PauseIcon, CheckIcon } from './Icons';
 import { applyPencilSketchEffect, applyCelShadingEffect, applyGengaEffect, apply8BitEffect, convertImageToAscii, applySilhouetteEffect, applyLineArtEffect, applyChromaKeyTransparency, applyFloodFillTransparency } from './services/imageEffects';
 
 // --- Type Definitions ---
@@ -197,112 +197,198 @@ const Modal: React.FC<{ title: string; onClose: () => void; children: React.Reac
     </div>
 );
 
-const AdPlaceholder: React.FC<{ className?: string, label?: string }> = ({ className = "", label = "Advertisement" }) => (
-    <div className={`w-full bg-slate-50 border border-dashed border-slate-200 rounded-lg flex items-center justify-center text-slate-300 text-xs font-bold tracking-widest uppercase select-none ${className}`}>
-        {label}
-    </div>
-);
-
+// AdPlaceholderを削除し、コンテンツ（テキスト）を強化するためのコンポーネントを追加
 const SeoContent: React.FC<{ lang: Language }> = ({ lang }) => {
+    // コンテンツ不足（AdSense審査落ち）を防ぐため、豊富なテキストコンテンツを提供
     if (lang === 'ja') {
         return (
-            <section className="max-w-4xl mx-auto px-6 py-20 border-t border-gray-100">
-                <h2 className="text-3xl font-black text-slate-900 mb-10 text-center tracking-tight">
-                    なぜ「アート変換スタジオ」が選ばれるのか？
+            <div className="w-full bg-slate-50 border-t border-slate-200 mt-20">
+                <section className="max-w-4xl mx-auto px-6 py-16">
+                    <h2 className="text-3xl font-black text-slate-900 mb-8 text-center tracking-tight">
+                        アート変換スタジオについて
+                    </h2>
+                    <p className="text-slate-600 leading-relaxed mb-12 text-center max-w-2xl mx-auto">
+                        アート変換スタジオ（Art Converter Studio）は、特別なソフトをインストールすることなく、ブラウザ上だけで画像や動画を様々なアートスタイルに変換できる高機能なWebツールです。
+                        アスキーアート生成、背景透過、アニメ風加工など、クリエイティブな作業を強力にサポートします。
+                    </p>
+
+                    <div className="grid md:grid-cols-2 gap-12 mb-20">
+                        <article>
+                            <h3 className="text-xl font-bold text-slate-800 mb-3 flex items-center gap-2">
+                                <TransparentBgIcon className="w-6 h-6 text-emerald-500" />
+                                高精度な背景透過・切り抜き
+                            </h3>
+                            <p className="text-slate-600 leading-relaxed text-sm">
+                                画像編集ソフトを使わずに、ブラウザだけで一瞬にして画像の背景を透明にできます。
+                                従来のクロマキー処理に加え、高度な「領域拡張法（Flood Fill）」アルゴリズムを搭載。
+                                被写体の内側にある同系色を誤って消すことなく、輪郭を認識して背景だけを綺麗に透明化します。
+                                ECサイトの商品画像作成や、資料作成の効率化に最適です。
+                            </p>
+                        </article>
+                        <article>
+                            <h3 className="text-xl font-bold text-slate-800 mb-3 flex items-center gap-2">
+                                <AsciiArtIcon className="w-6 h-6 text-emerald-500" />
+                                動画も変換できるアスキーアート
+                            </h3>
+                            <p className="text-slate-600 leading-relaxed text-sm">
+                                静止画だけでなく、MP4などの動画ファイルをそのまま「動くアスキーアート」に変換できます。
+                                文字だけで構成されたユニークな映像は、SNSでのシェアや、レトロなWebサイトの演出、プログラミング関連のデザイン素材として注目を集めること間違いありません。
+                                コピーボタン一つでテキストデータとして取得可能です。
+                            </p>
+                        </article>
+                        <article>
+                            <h3 className="text-xl font-bold text-slate-800 mb-3 flex items-center gap-2">
+                                <AnimationSketchIcon className="w-6 h-6 text-emerald-500" />
+                                アニメ原画・線画抽出機能
+                            </h3>
+                            <p className="text-slate-600 leading-relaxed text-sm">
+                                実写映像からエッジ（輪郭）を高精度に検出し、アニメの原画や線画のようなスタイルに加工します。
+                                イラスト作成の下書き（トレース素材）として利用したり、マンガ背景のような効果を写真に加えることができます。
+                                すべての処理はローカル（ブラウザ）上で完結するため、巨大な動画ファイルをアップロードする待ち時間もありません。
+                            </p>
+                        </article>
+                        <article>
+                            <h3 className="text-xl font-bold text-slate-800 mb-3 flex items-center gap-2">
+                                <SparklesIcon className="w-6 h-6 text-emerald-500" />
+                                完全無料・登録不要・安心安全
+                            </h3>
+                            <p className="text-slate-600 leading-relaxed text-sm">
+                                当サイトはサーバーに画像を送信しません。すべての画像処理はお使いの端末（PCやスマートフォン）のブラウザ内でJavaScriptによって行われます。
+                                そのため、プライベートな写真や機密情報を含む画像が外部サーバーに流出する心配がなく、安心してご利用いただけます。
+                                面倒な会員登録やログインも一切不要です。
+                            </p>
+                        </article>
+                    </div>
+
+                    <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm mb-20">
+                        <h3 className="text-2xl font-bold text-slate-900 mb-6">使い方はとても簡単です</h3>
+                        <ol className="list-decimal list-inside space-y-4 text-slate-700 font-medium">
+                            <li className="pl-2"><span className="font-bold text-slate-900">スタイルを選択する:</span> 画面上部のアイコンから、変換したいスタイル（アスキーアート、背景透過、アニメ原画など）を選びます。</li>
+                            <li className="pl-2"><span className="font-bold text-slate-900">ファイルをアップロード:</span> 画像または動画ファイルをドラッグ＆ドロップするか、クリックして選択します。</li>
+                            <li className="pl-2"><span className="font-bold text-slate-900">詳細を調整:</span> 必要に応じてスライダーを動かし、線の太さや透過のしきい値を調整します。プレビューはリアルタイムで更新されます。</li>
+                            <li className="pl-2"><span className="font-bold text-slate-900">保存・共有:</span> 結果に満足したら、画像をダウンロードしたり、テキストをコピーしてSNSなどで共有しましょう。</li>
+                        </ol>
+                    </div>
+
+                    <div className="space-y-8">
+                        <h3 className="text-2xl font-bold text-slate-900 text-center">よくある質問 (FAQ)</h3>
+                        <div className="space-y-4">
+                            <div className="bg-white p-6 rounded-xl border border-slate-200">
+                                <h4 className="font-bold text-lg text-slate-800 mb-2">Q. 本当に無料ですか？</h4>
+                                <p className="text-slate-600 text-sm">A. はい、すべての機能を完全に無料でご利用いただけます。課金要素もありません。</p>
+                            </div>
+                            <div className="bg-white p-6 rounded-xl border border-slate-200">
+                                <h4 className="font-bold text-lg text-slate-800 mb-2">Q. アップロードした画像はどこかに保存されますか？</h4>
+                                <p className="text-slate-600 text-sm">A. いいえ、保存されません。当ツールは「クライアントサイド処理」技術を使用しており、画像データがお使いのデバイスから外部のサーバーへ送信されることは一切ありません。</p>
+                            </div>
+                            <div className="bg-white p-6 rounded-xl border border-slate-200">
+                                <h4 className="font-bold text-lg text-slate-800 mb-2">Q. 生成した画像は商用利用できますか？</h4>
+                                <p className="text-slate-600 text-sm">A. はい、当ツールで生成した画像やテキストデータの著作権は、元の画像の権利を持つ利用者に帰属します。ご自身の作品として商用利用していただいて問題ありません。</p>
+                            </div>
+                            <div className="bg-white p-6 rounded-xl border border-slate-200">
+                                <h4 className="font-bold text-lg text-slate-800 mb-2">Q. スマホでも使えますか？</h4>
+                                <p className="text-slate-600 text-sm">A. はい、iPhoneやAndroidなどのスマートフォン、タブレットのブラウザでも動作します。ただし、動画変換などの重い処理は、PC環境でのご利用を推奨します。</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        );
+    }
+    
+    // English Content
+    return (
+        <div className="w-full bg-slate-50 border-t border-slate-200 mt-20">
+            <section className="max-w-4xl mx-auto px-6 py-16">
+                <h2 className="text-3xl font-black text-slate-900 mb-8 text-center tracking-tight">
+                    About Art Converter Studio
                 </h2>
-                <div className="grid md:grid-cols-2 gap-12">
+                <p className="text-slate-600 leading-relaxed mb-12 text-center max-w-2xl mx-auto">
+                    Art Converter Studio is a powerful web tool that allows you to convert images and videos into various art styles directly in your browser without installing any software.
+                    It strongly supports creative work such as ASCII art generation, background removal, and anime-style processing.
+                </p>
+
+                <div className="grid md:grid-cols-2 gap-12 mb-20">
                     <article>
                         <h3 className="text-xl font-bold text-slate-800 mb-3 flex items-center gap-2">
                             <TransparentBgIcon className="w-6 h-6 text-emerald-500" />
-                            高精度な背景透過・切り抜き
+                            High-Precision Background Removal
                         </h3>
                         <p className="text-slate-600 leading-relaxed text-sm">
-                            従来のクロマキー処理に加え、高度な「領域拡張法（Flood Fill）」アルゴリズムを搭載。
-                            被写体の内側にある同系色を誤って消すことなく、輪郭を認識して背景だけを綺麗に透明化します。
+                            Make image backgrounds transparent instantly without using expensive photo editing software.
+                            In addition to traditional chroma key processing, it is equipped with advanced "Flood Fill" algorithms.
+                            It recognizes contours to cleanly remove only the background without accidentally erasing similar colors inside the subject.
+                            Ideal for creating product images for e-commerce sites and improving the efficiency of document creation.
                         </p>
                     </article>
                     <article>
                         <h3 className="text-xl font-bold text-slate-800 mb-3 flex items-center gap-2">
                             <AsciiArtIcon className="w-6 h-6 text-emerald-500" />
-                            動画も変換できるアスキーアート
+                            Video to ASCII Art
                         </h3>
                         <p className="text-slate-600 leading-relaxed text-sm">
-                            静止画だけでなく、動画ファイル（MP4等）をそのまま動くアスキーアートに変換できます。
-                            SNSでのシェアや、レトロなWebサイト演出に使えるユニークなテキストデータを瞬時に生成。
+                            Convert not only static images but also video files such as MP4 directly into "moving ASCII art".
+                            Unique videos composed only of characters are sure to attract attention for sharing on SNS, retro website designs, and programming-related design materials.
+                            You can get it as text data with a single copy button.
                         </p>
                     </article>
                     <article>
                         <h3 className="text-xl font-bold text-slate-800 mb-3 flex items-center gap-2">
                             <AnimationSketchIcon className="w-6 h-6 text-emerald-500" />
-                            アニメ原画・線画抽出機能
+                            Anime Line Art Extraction
                         </h3>
                         <p className="text-slate-600 leading-relaxed text-sm">
-                            実写映像からエッジを検出し、アニメの原画や線画のようなスタイルに加工します。
-                            すべての処理はブラウザ上で完結するため、巨大なファイルをアップロードする待ち時間もありません。
+                            Detects edges (contours) from live-action footage with high precision and processes them into styles resembling anime raw drawings or line art.
+                            You can use it as a draft (trace material) for illustration creation or add a manga background-like effect to photos.
+                            Everything happens in the local browser, so there is no waiting time for uploading huge video files.
                         </p>
                     </article>
                     <article>
                         <h3 className="text-xl font-bold text-slate-800 mb-3 flex items-center gap-2">
                             <SparklesIcon className="w-6 h-6 text-emerald-500" />
-                            完全無料・登録不要・安心安全
+                            Free, No Registration, Secure
                         </h3>
                         <p className="text-slate-600 leading-relaxed text-sm">
-                            当サイトはサーバーに画像を送信しません。すべての画像処理はお使いの端末（ブラウザ）のJavaScriptで行われます。
-                            プライベートな写真でも、外部に流出する心配がなく安心してご利用いただけます。
+                            We do not send images to any server. All image processing is done by JavaScript within the browser of your device (PC or smartphone).
+                            Therefore, you can use it with peace of mind without worrying about private photos or images containing confidential information leaking to external servers.
+                            No troublesome membership registration or login is required.
                         </p>
                     </article>
                 </div>
+
+                <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm mb-20">
+                    <h3 className="text-2xl font-bold text-slate-900 mb-6">How to Use</h3>
+                    <ol className="list-decimal list-inside space-y-4 text-slate-700 font-medium">
+                        <li className="pl-2"><span className="font-bold text-slate-900">Select Style:</span> Choose the style you want to convert (ASCII art, Transparent background, Anime line, etc.) from the icons at the top.</li>
+                        <li className="pl-2"><span className="font-bold text-slate-900">Upload File:</span> Drag and drop an image or video file, or click to select one.</li>
+                        <li className="pl-2"><span className="font-bold text-slate-900">Adjust Settings:</span> Use the sliders to adjust line thickness, transparency threshold, etc. The preview updates in real-time.</li>
+                        <li className="pl-2"><span className="font-bold text-slate-900">Save & Share:</span> Once satisfied with the result, download the image or copy the text to share on social media.</li>
+                    </ol>
+                </div>
+
+                <div className="space-y-8">
+                    <h3 className="text-2xl font-bold text-slate-900 text-center">Frequently Asked Questions (FAQ)</h3>
+                    <div className="space-y-4">
+                        <div className="bg-white p-6 rounded-xl border border-slate-200">
+                            <h4 className="font-bold text-lg text-slate-800 mb-2">Q. Is it really free?</h4>
+                            <p className="text-slate-600 text-sm">A. Yes, all features are completely free to use. There are no hidden charges.</p>
+                        </div>
+                        <div className="bg-white p-6 rounded-xl border border-slate-200">
+                            <h4 className="font-bold text-lg text-slate-800 mb-2">Q. Are my uploaded images saved somewhere?</h4>
+                            <p className="text-slate-600 text-sm">A. No, they are not saved. This tool uses "client-side processing" technology, and image data is never sent from your device to an external server.</p>
+                        </div>
+                        <div className="bg-white p-6 rounded-xl border border-slate-200">
+                            <h4 className="font-bold text-lg text-slate-800 mb-2">Q. Can I use the generated images commercially?</h4>
+                            <p className="text-slate-600 text-sm">A. Yes, the copyright of the images and text data generated by this tool belongs to the user who owns the original image. You can use them commercially as your own work.</p>
+                        </div>
+                        <div className="bg-white p-6 rounded-xl border border-slate-200">
+                            <h4 className="font-bold text-lg text-slate-800 mb-2">Q. Can I use it on my smartphone?</h4>
+                            <p className="text-slate-600 text-sm">A. Yes, it works on browsers on smartphones and tablets such as iPhones and Androids. However, for heavy processing such as video conversion, we recommend using a PC environment.</p>
+                        </div>
+                    </div>
+                </div>
             </section>
-        );
-    }
-    return (
-        <section className="max-w-4xl mx-auto px-6 py-20 border-t border-gray-100">
-            <h2 className="text-3xl font-black text-slate-900 mb-10 text-center tracking-tight">
-                Why Choose Art Converter Studio?
-            </h2>
-            <div className="grid md:grid-cols-2 gap-12">
-                <article>
-                    <h3 className="text-xl font-bold text-slate-800 mb-3 flex items-center gap-2">
-                        <TransparentBgIcon className="w-6 h-6 text-emerald-500" />
-                        High-Precision Background Removal
-                    </h3>
-                    <p className="text-slate-600 leading-relaxed text-sm">
-                        Equipped with advanced "Flood Fill" algorithms in addition to traditional chroma key processing. 
-                        It recognizes contours to cleanly remove only the background without accidentally erasing similar colors inside the subject.
-                    </p>
-                </article>
-                <article>
-                    <h3 className="text-xl font-bold text-slate-800 mb-3 flex items-center gap-2">
-                        <AsciiArtIcon className="w-6 h-6 text-emerald-500" />
-                        Video to ASCII Art
-                    </h3>
-                    <p className="text-slate-600 leading-relaxed text-sm">
-                        Convert not just static images but also video files (MP4, etc.) into moving ASCII art instantly. 
-                        Generate unique text data perfect for social media sharing or retro website designs.
-                    </p>
-                </article>
-                <article>
-                    <h3 className="text-xl font-bold text-slate-800 mb-3 flex items-center gap-2">
-                        <AnimationSketchIcon className="w-6 h-6 text-emerald-500" />
-                        Anime Line Art Extraction
-                    </h3>
-                    <p className="text-slate-600 leading-relaxed text-sm">
-                        Detects edges from live-action footage and processes them into styles resembling anime raw drawings or line art. 
-                        Everything happens in the browser, so there's no waiting time for large file uploads.
-                    </p>
-                </article>
-                <article>
-                    <h3 className="text-xl font-bold text-slate-800 mb-3 flex items-center gap-2">
-                        <SparklesIcon className="w-6 h-6 text-emerald-500" />
-                        Free, No Reg, Secure
-                    </h3>
-                    <p className="text-slate-600 leading-relaxed text-sm">
-                        We do not send images to any server. All processing is done via JavaScript on your device (browser). 
-                        You can use it safely without worrying about private photos leaking externally.
-                    </p>
-                </article>
-            </div>
-        </section>
+        </div>
     );
 };
 
@@ -383,11 +469,6 @@ interface FooterProps {
 
 const Footer: React.FC<FooterProps> = ({ onOpenModal, t }) => (
     <footer className="bg-slate-50 border-t border-slate-200 py-16">
-        {/* Ad Space above footer */}
-        <div className="max-w-6xl mx-auto px-6 mb-12">
-            <AdPlaceholder className="h-[90px]" label="Advertisement (Footer)" />
-        </div>
-
         <div className="max-w-6xl mx-auto px-6 text-center">
             <div className="flex items-center justify-center gap-2 mb-6">
                 <div className="w-8 h-8 bg-slate-200 rounded-full flex items-center justify-center">
@@ -970,11 +1051,8 @@ export default function App(): React.ReactNode {
                 <span className="flex items-center gap-1.5"><CheckIcon className="w-4 h-4 text-emerald-500" /> {t('feature_free')}</span>
                 <span className="flex items-center gap-1.5"><CheckIcon className="w-4 h-4 text-emerald-500" /> {t('feature_privacy')}</span>
             </div>
-
-            {/* Ad Space below Hero */}
-            <div className="max-w-2xl mx-auto">
-                <AdPlaceholder className="h-[90px]" label="Advertisement (Top Banner)" />
-            </div>
+            
+            {/* AdPlaceholder was here - removed for safety during review */}
         </div>
       </div>
 
@@ -1061,11 +1139,6 @@ export default function App(): React.ReactNode {
                     </div>
                 )}
             </section>
-
-             {/* Ad Space Bottom (After Result) */}
-             <div className="flex justify-center py-8">
-                <AdPlaceholder className="w-full max-w-3xl h-[250px]" label="Advertisement" />
-            </div>
         </div>
       </main>
       
