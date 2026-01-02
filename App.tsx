@@ -93,9 +93,9 @@ const TRANSLATIONS = {
         footer_privacy: "Privacy Policy",
         footer_rights: "All rights reserved.",
         
-        modal_terms_title: "Terms of Service",
-        modal_privacy_title: "Privacy Policy",
-        modal_close: "Close",
+        legal_terms_title: "Terms of Service",
+        legal_privacy_title: "Privacy Policy",
+        legal_contact_title: "Contact / Operator",
     },
     ja: {
         meta_title: "アート変換スタジオ | 無料で画像を背景透過・アスキーアート・アニメ風に加工",
@@ -169,35 +169,15 @@ const TRANSLATIONS = {
         footer_privacy: "プライバシーポリシー",
         footer_rights: "All rights reserved.",
         
-        modal_terms_title: "利用規約",
-        modal_privacy_title: "プライバシーポリシー",
-        modal_close: "閉じる",
+        legal_terms_title: "利用規約",
+        legal_privacy_title: "プライバシーポリシー",
+        legal_contact_title: "運営者情報・お問い合わせ",
     }
 };
 
 // --- Components ---
-const Modal: React.FC<{ title: string; onClose: () => void; children: React.ReactNode; t: any }> = ({ title, onClose, children, t }) => (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm animate-fade-in" onClick={onClose}>
-        <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[80vh] overflow-hidden flex flex-col" onClick={e => e.stopPropagation()}>
-            <div className="flex items-center justify-between p-6 border-b border-slate-100">
-                <h3 className="text-xl font-bold text-slate-800">{title}</h3>
-                <button onClick={onClose} className="text-slate-400 hover:text-slate-600 transition-colors bg-slate-100 p-1 rounded-full">
-                    <XCircleIcon className="w-6 h-6" />
-                </button>
-            </div>
-            <div className="p-6 overflow-y-auto leading-relaxed text-slate-600 text-sm space-y-4">
-                {children}
-            </div>
-            <div className="p-6 border-t border-slate-100 bg-slate-50 flex justify-end">
-                <button onClick={onClose} className="px-6 py-2 bg-slate-900 text-white font-bold rounded-lg hover:bg-slate-800 transition-colors">
-                    {t('modal_close')}
-                </button>
-            </div>
-        </div>
-    </div>
-);
 
-// AdPlaceholderを削除し、コンテンツ（テキスト）を強化するためのコンポーネントを追加
+// AdPlaceholderを削除し、コンテンツ（テキスト）を強化するためのコンポーネント
 const SeoContent: React.FC<{ lang: Language }> = ({ lang }) => {
     // コンテンツ不足（AdSense審査落ち）を防ぐため、豊富なテキストコンテンツを提供
     if (lang === 'ja') {
@@ -392,6 +372,89 @@ const SeoContent: React.FC<{ lang: Language }> = ({ lang }) => {
     );
 };
 
+// --- 新規コンポーネント: 常時表示される法的情報 ---
+// これにより、クローラーが規約とプライバシーポリシーを確実に認識できるようにする
+const LegalInformation: React.FC<{ lang: Language, t: any }> = ({ lang, t }) => {
+  return (
+    <div className="w-full bg-slate-100 border-t border-slate-200 py-16 text-slate-600">
+      <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 lg:grid-cols-3 gap-12">
+        <section id="terms" className="space-y-4">
+          <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-emerald-500 rounded-full"></span>
+            {t('legal_terms_title')}
+          </h3>
+          <div className="text-sm leading-relaxed space-y-3 p-6 bg-white rounded-xl border border-slate-200 shadow-sm">
+             {lang === 'ja' ? (
+                <>
+                <h4 className="font-bold text-slate-800">1. 本サービスの利用について</h4>
+                <p>アート変換スタジオ（以下、当サービス）は、ユーザーがブラウザ上で画像や動画を加工できる無料ツールです。商用・非商用問わずご自由にお使いいただけます。</p>
+                <h4 className="font-bold text-slate-800">2. 免責事項</h4>
+                <p>当サービスを利用した結果生じたいかなる損害（データの損失、業務の中断、精神的苦痛等）についても、運営者は一切の責任を負いません。加工した画像の使用はユーザー自身の責任で行ってください。</p>
+                <h4 className="font-bold text-slate-800">3. 禁止事項</h4>
+                <p>当サービスを用いて、公序良俗に反する画像、違法な画像、他者の権利を侵害する画像を生成・公開する行為を禁止します。</p>
+                </>
+            ) : (
+                <>
+                <h4 className="font-bold text-slate-800">1. Usage of Service</h4>
+                <p>Art Converter Studio (hereinafter "Service") is a free tool that allows users to process images and videos in the browser. You are free to use it for commercial and non-commercial purposes.</p>
+                <h4 className="font-bold text-slate-800">2. Disclaimer</h4>
+                <p>The operator assumes no responsibility for any damages (loss of data, business interruption, mental distress, etc.) resulting from the use of this Service. Use of processed images is at the user's own risk.</p>
+                <h4 className="font-bold text-slate-800">3. Prohibited Acts</h4>
+                <p>It is prohibited to use this Service to generate or publish images that are offensive to public order and morals, illegal, or infringe on the rights of others.</p>
+                </>
+            )}
+          </div>
+        </section>
+
+        <section id="privacy" className="space-y-4">
+          <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-emerald-500 rounded-full"></span>
+            {t('legal_privacy_title')}
+          </h3>
+          <div className="text-sm leading-relaxed space-y-3 p-6 bg-white rounded-xl border border-slate-200 shadow-sm">
+             {lang === 'ja' ? (
+                 <>
+                 <h4 className="font-bold text-slate-800">1. データは送信されません</h4>
+                 <p>当サービスは「クライアントサイド処理」を採用しています。あなたがアップロードした画像や動画ファイルが、当サービスのサーバーや外部の第三者に送信されることは一切ありません。すべての画像処理はお使いのデバイス（PC、スマホ）のブラウザ内で行われます。</p>
+                 <h4 className="font-bold text-slate-800 mt-4">2. 広告配信とCookieについて</h4>
+                 <p>当サイトでは、第三者配信の広告サービス「Google Adsense（グーグルアドセンス）」を利用しています。</p>
+                 <p className="mt-2">広告配信事業者は、ユーザーの興味に応じた広告を表示するためにCookie（クッキー）を使用することがあります。これには、ユーザーが当サイトや他のサイトに過去にアクセスした際の情報が含まれます。</p>
+                 <p className="mt-2">ユーザーは、広告設定でパーソナライズ広告を無効にすることができます。また、<a href="https://www.aboutads.info" target="_blank" rel="noreferrer" className="text-emerald-600 underline">www.aboutads.info</a> にアクセスすれば、パーソナライズ広告に使われる第三者配信事業者の Cookie を無効にすることができます。</p>
+                 </>
+             ) : (
+                 <>
+                 <h4 className="font-bold text-slate-800">1. Data is NOT Sent</h4>
+                 <p>This service uses "Client-Side Processing". Image or video files you upload are never sent to our servers or any third parties. All image processing happens within your device's browser.</p>
+                 <h4 className="font-bold text-slate-800 mt-4">2. Advertising and Cookies</h4>
+                 <p>This site uses "Google AdSense", a third-party advertising service.</p>
+                 <p className="mt-2">Advertising providers may use Cookies to display ads based on user interests. This includes information about past visits to this site and others.</p>
+                 <p className="mt-2">Users can disable personalized ads in ad settings. You can also visit <a href="https://www.aboutads.info" target="_blank" rel="noreferrer" className="text-emerald-600 underline">www.aboutads.info</a> to opt-out of third-party vendor cookies used for personalized advertising.</p>
+                 </>
+             )}
+          </div>
+        </section>
+
+        <section id="contact" className="space-y-4">
+          <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-emerald-500 rounded-full"></span>
+            {t('legal_contact_title')}
+          </h3>
+          <div className="text-sm leading-relaxed space-y-3 p-6 bg-white rounded-xl border border-slate-200 shadow-sm">
+             <p className="font-bold text-slate-800">Contact / 連絡先</p>
+             <p className="break-all">Email: <a href="mailto:yuu758585@gmail.com" className="text-emerald-600 underline font-medium">yuu758585@gmail.com</a></p>
+             {lang === 'ja' && (
+                 <p className="text-xs text-slate-400 mt-2">※ ツールに関するご質問やご要望、不具合の報告などがございましたら、上記メールアドレスまでお気軽にご連絡ください。</p>
+             )}
+             {lang === 'en' && (
+                 <p className="text-xs text-slate-400 mt-2">* Please feel free to contact us via the email address above for any questions, requests, or bug reports regarding this tool.</p>
+             )}
+          </div>
+        </section>
+      </div>
+    </div>
+  );
+};
+
 const ImageAsciiViewer: React.FC<{ text: string }> = ({ text }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [fontSize, setFontSize] = useState(10);
@@ -462,13 +525,8 @@ const Navbar: React.FC<{ lang: Language, setLang: (l: Language) => void, t: any 
     </nav>
 );
 
-interface FooterProps {
-    onOpenModal: (type: 'terms' | 'privacy') => void;
-    t: any;
-}
-
-const Footer: React.FC<FooterProps> = ({ onOpenModal, t }) => (
-    <footer className="bg-slate-50 border-t border-slate-200 py-16">
+const Footer: React.FC<{ t: any }> = ({ t }) => (
+    <footer className="bg-slate-50 border-t border-slate-200 py-12">
         <div className="max-w-6xl mx-auto px-6 text-center">
             <div className="flex items-center justify-center gap-2 mb-6">
                 <div className="w-8 h-8 bg-slate-200 rounded-full flex items-center justify-center">
@@ -479,8 +537,8 @@ const Footer: React.FC<FooterProps> = ({ onOpenModal, t }) => (
                 {t('footer_desc')}
             </p>
             <div className="flex justify-center gap-6 text-sm text-slate-400 mb-8">
-                <button onClick={() => onOpenModal('terms')} className="hover:text-emerald-600 transition-colors">{t('footer_terms')}</button>
-                <button onClick={() => onOpenModal('privacy')} className="hover:text-emerald-600 transition-colors">{t('footer_privacy')}</button>
+                <a href="#terms" className="hover:text-emerald-600 transition-colors">{t('footer_terms')}</a>
+                <a href="#privacy" className="hover:text-emerald-600 transition-colors">{t('footer_privacy')}</a>
             </div>
             <div className="text-xs text-slate-300">
                 &copy; {new Date().getFullYear()} Art Converter Studio. {t('footer_rights')}
@@ -573,9 +631,6 @@ export default function App(): React.ReactNode {
   
   // Settings Visibility
   const [showAdvancedSettings, setShowAdvancedSettings] = useState(false);
-
-  // Modal State
-  const [activeModal, setActiveModal] = useState<'terms' | 'privacy' | null>(null);
 
   // Detailed ASCII Config Values
   const [asciiWidth, setAsciiWidth] = useState<number>(200);
@@ -1051,8 +1106,6 @@ export default function App(): React.ReactNode {
                 <span className="flex items-center gap-1.5"><CheckIcon className="w-4 h-4 text-emerald-500" /> {t('feature_free')}</span>
                 <span className="flex items-center gap-1.5"><CheckIcon className="w-4 h-4 text-emerald-500" /> {t('feature_privacy')}</span>
             </div>
-            
-            {/* AdPlaceholder was here - removed for safety during review */}
         </div>
       </div>
 
@@ -1143,55 +1196,8 @@ export default function App(): React.ReactNode {
       </main>
       
       <SeoContent lang={language} />
-      <Footer onOpenModal={setActiveModal} t={t} />
-
-      {/* Modals */}
-      {activeModal === 'terms' && (
-        <Modal title={t('modal_terms_title')} onClose={() => setActiveModal(null)} t={t}>
-            {language === 'ja' ? (
-                <>
-                <h4 className="font-bold text-slate-900">1. 本サービスの利用について</h4>
-                <p>アート変換スタジオ（以下、当サービス）は、ユーザーがブラウザ上で画像や動画を加工できる無料ツールです。商用・非商用問わずご自由にお使いいただけます。</p>
-                <h4 className="font-bold text-slate-900">2. 免責事項</h4>
-                <p>当サービスを利用した結果生じたいかなる損害（データの損失、業務の中断、精神的苦痛等）についても、運営者は一切の責任を負いません。加工した画像の使用はユーザー自身の責任で行ってください。</p>
-                <h4 className="font-bold text-slate-900">3. 禁止事項</h4>
-                <p>当サービスを用いて、公序良俗に反する画像、違法な画像、他者の権利を侵害する画像を生成・公開する行為を禁止します。</p>
-                </>
-            ) : (
-                <>
-                <h4 className="font-bold text-slate-900">1. Usage of Service</h4>
-                <p>Art Converter Studio (hereinafter "Service") is a free tool that allows users to process images and videos in the browser. You are free to use it for commercial and non-commercial purposes.</p>
-                <h4 className="font-bold text-slate-900">2. Disclaimer</h4>
-                <p>The operator assumes no responsibility for any damages (loss of data, business interruption, mental distress, etc.) resulting from the use of this Service. Use of processed images is at the user's own risk.</p>
-                <h4 className="font-bold text-slate-900">3. Prohibited Acts</h4>
-                <p>It is prohibited to use this Service to generate or publish images that are offensive to public order and morals, illegal, or infringe on the rights of others.</p>
-                </>
-            )}
-        </Modal>
-      )}
-      {activeModal === 'privacy' && (
-        <Modal title={t('modal_privacy_title')} onClose={() => setActiveModal(null)} t={t}>
-             {language === 'ja' ? (
-                 <>
-                 <h4 className="font-bold text-slate-900">1. データは送信されません</h4>
-                 <p>当サービスは「クライアントサイド処理」を採用しています。あなたがアップロードした画像や動画ファイルが、当サービスのサーバーや外部の第三者に送信されることは一切ありません。すべての画像処理はお使いのデバイス（PC、スマホ）のブラウザ内で行われます。</p>
-                 <h4 className="font-bold text-slate-900 mt-4">2. 広告配信とCookieについて</h4>
-                 <p>当サイトでは、第三者配信の広告サービス「Google Adsense（グーグルアドセンス）」を利用しています。</p>
-                 <p className="mt-2">広告配信事業者は、ユーザーの興味に応じた広告を表示するためにCookie（クッキー）を使用することがあります。これには、ユーザーが当サイトや他のサイトに過去にアクセスした際の情報が含まれます。</p>
-                 <p className="mt-2">ユーザーは、広告設定でパーソナライズ広告を無効にすることができます。また、<a href="https://www.aboutads.info" target="_blank" rel="noreferrer" className="text-emerald-600 underline">www.aboutads.info</a> にアクセスすれば、パーソナライズ広告に使われる第三者配信事業者の Cookie を無効にすることができます。</p>
-                 </>
-             ) : (
-                 <>
-                 <h4 className="font-bold text-slate-900">1. Data is NOT Sent</h4>
-                 <p>This service uses "Client-Side Processing". Image or video files you upload are never sent to our servers or any third parties. All image processing happens within your device's browser.</p>
-                 <h4 className="font-bold text-slate-900 mt-4">2. Advertising and Cookies</h4>
-                 <p>This site uses "Google AdSense", a third-party advertising service.</p>
-                 <p className="mt-2">Advertising providers may use Cookies to display ads based on user interests. This includes information about past visits to this site and others.</p>
-                 <p className="mt-2">Users can disable personalized ads in ad settings. You can also visit <a href="https://www.aboutads.info" target="_blank" rel="noreferrer" className="text-emerald-600 underline">www.aboutads.info</a> to opt-out of third-party vendor cookies used for personalized advertising.</p>
-                 </>
-             )}
-        </Modal>
-      )}
+      <LegalInformation lang={language} t={t} />
+      <Footer t={t} />
 
       <video ref={videoRef} className="hidden" muted playsInline />
       <canvas ref={canvasRef} className="hidden" />
