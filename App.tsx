@@ -29,6 +29,9 @@ const TRANSLATIONS = {
         hero_title_1: "Turn Images & Videos",
         hero_title_2: "Into Art Instantly.",
         hero_desc: "No install, completely free. Convert your media into ASCII art, transparent backgrounds, or anime-style effects directly in your browser.",
+        
+        intro_text: "Art Converter Studio is a 100% free online tool that processes your images and videos locally. From background removal to ASCII art generation, unleash your creativity securely without uploading data to any server.",
+
         feature_no_reg: "No Registration",
         feature_free: "Completely Free",
         feature_privacy: "Privacy Focused",
@@ -95,7 +98,11 @@ const TRANSLATIONS = {
         
         legal_terms_title: "Terms of Service",
         legal_privacy_title: "Privacy Policy",
-        legal_contact_title: "Contact / Operator",
+        legal_contact_title: "Operator / Contact",
+        
+        profile_name: "yuu",
+        profile_title: "University Student / Web Developer",
+        profile_desc: "I am a university student studying programming. I created this tool to apply what I've learned about image processing algorithms. My goal is to create useful web apps that respect user privacy.",
     },
     ja: {
         meta_title: "アート変換スタジオ | 無料で画像を背景透過・アスキーアート・アニメ風に加工",
@@ -105,6 +112,9 @@ const TRANSLATIONS = {
         hero_title_1: "画像と動画を、",
         hero_title_2: "一瞬でアートにする。",
         hero_desc: "インストール不要、完全無料。アスキーアート、背景透過、アニメ風加工など、あなたのクリエイティブをブラウザひとつで加速させます。",
+        
+        intro_text: "アート変換スタジオは、画像をサーバーに送信せず、ブラウザだけで安全に加工できる100%無料のWebツールです。背景透過からアスキーアート生成まで、登録不要ですぐに使えます。",
+
         feature_no_reg: "登録不要",
         feature_free: "完全無料",
         feature_privacy: "プライバシー保護",
@@ -171,7 +181,11 @@ const TRANSLATIONS = {
         
         legal_terms_title: "利用規約",
         legal_privacy_title: "プライバシーポリシー",
-        legal_contact_title: "運営者情報・お問い合わせ",
+        legal_contact_title: "運営者・お問い合わせ",
+
+        profile_name: "yuu",
+        profile_title: "大学生 / プログラミング学習中",
+        profile_desc: "現在、大学に通いながらWeb開発とプログラミングを勉強しています。学習のアウトプットとして、自分が「使いたい」と思えるツールを目指して開発しました。ユーザーのプライバシーを守りつつ、便利な機能を提供できるよう日々改良を続けています。",
     }
 };
 
@@ -238,6 +252,37 @@ const SeoContent: React.FC<{ lang: Language }> = ({ lang }) => {
                                 面倒な会員登録やログインも一切不要です。
                             </p>
                         </article>
+                    </div>
+
+                    {/* AdSense審査対策：技術的な仕組み解説（文字数と専門性を担保） */}
+                    <div className="mb-20 space-y-12 border-t border-slate-200 pt-16">
+                        <div className="prose prose-slate max-w-none">
+                            <h3 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+                                <span className="w-1.5 h-8 bg-emerald-500 rounded-full"></span>
+                                本ツールの技術的な仕組み
+                            </h3>
+                            
+                            <h4 className="text-lg font-bold text-slate-800 mt-6 mb-3">クライアントサイド・レンダリング技術</h4>
+                            <p className="text-slate-600 text-sm leading-relaxed mb-4">
+                                アート変換スタジオの最大の特徴は、サーバー処理を行わない「完全クライアントサイド実行」にあります。
+                                通常、画像加工サービスはユーザーがアップロードした画像をサーバーに送信し、そこでPythonやC++などで処理を行ってから結果を返します。
+                                しかし、当ツールではHTML5の <code>&lt;canvas&gt;</code> APIとJavaScriptの型付き配列（Typed Arrays）を駆使し、ブラウザのメモリ上で直接ピクセルデータを操作しています。
+                            </p>
+
+                            <h4 className="text-lg font-bold text-slate-800 mt-6 mb-3">アルゴリズムの実装について</h4>
+                            <p className="text-slate-600 text-sm leading-relaxed mb-4">
+                                例えば「背景透過」機能では、単純な色指定による削除だけでなく、探索アルゴリズムの一種である「領域拡張法（Flood Fill / シードフィル）」をJavaScriptで実装しています。
+                                画像の四隅を始点として、隣接するピクセルの色の類似度（ユークリッド距離）を計算し、再帰的あるいはスタックを用いた処理で背景領域だけを特定して透明化します。
+                                これにより、被写体の内側にある同系色を誤って削除することなく、高精度な切り抜きを実現しています。
+                            </p>
+
+                            <h4 className="text-lg font-bold text-slate-800 mt-6 mb-3">アスキーアート変換のロジック</h4>
+                            <p className="text-slate-600 text-sm leading-relaxed mb-4">
+                                画像をアスキーアートに変換する際は、まず画像をグレースケール化し、各ピクセルの輝度（明るさ）を算出します。
+                                次に、画像を格子状のブロックに分割し、ブロックごとの平均輝度を求めます。
+                                事前に「密度（黒っぽさ）」順に並べた文字セット（例: <code>$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~&lt;&gt;i!lI;:,"^`'. </code>）の中から、その輝度に最も近い文字をマッピングすることで、テキストによる画像の再現を行っています。
+                            </p>
+                        </div>
                     </div>
 
                     <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm mb-20">
@@ -336,6 +381,37 @@ const SeoContent: React.FC<{ lang: Language }> = ({ lang }) => {
                     </article>
                 </div>
 
+                {/* Technical Deep Dive for SEO and Authority */}
+                <div className="mb-20 space-y-12 border-t border-slate-200 pt-16">
+                    <div className="prose prose-slate max-w-none">
+                        <h3 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+                             <span className="w-1.5 h-8 bg-emerald-500 rounded-full"></span>
+                             How It Works: Technical Architecture
+                        </h3>
+                        
+                        <h4 className="text-lg font-bold text-slate-800 mt-6 mb-3">Client-Side Rendering Technology</h4>
+                        <p className="text-slate-600 text-sm leading-relaxed mb-4">
+                            The defining feature of Art Converter Studio is its "fully client-side execution," meaning no server processing occurs.
+                            Typically, image processing services send your uploaded images to a server where languages like Python or C++ process them before returning the result.
+                            However, this tool leverages the HTML5 <code>&lt;canvas&gt;</code> API and JavaScript Typed Arrays to manipulate pixel data directly in your browser's memory.
+                        </p>
+
+                        <h4 className="text-lg font-bold text-slate-800 mt-6 mb-3">Implementation of Algorithms</h4>
+                        <p className="text-slate-600 text-sm leading-relaxed mb-4">
+                            For example, in the "Background Removal" feature, we implement a "Flood Fill" algorithm in pure JavaScript rather than just simple color deletion.
+                            Starting from the four corners of the image, the algorithm calculates the color similarity (Euclidean distance) of adjacent pixels and uses recursion or a stack based approach to identify and make only the background transparent.
+                            This allows for high-precision extraction without accidentally removing similar colors found within the subject.
+                        </p>
+
+                        <h4 className="text-lg font-bold text-slate-800 mt-6 mb-3">Logic Behind ASCII Art Conversion</h4>
+                        <p className="text-slate-600 text-sm leading-relaxed mb-4">
+                            When converting an image to ASCII art, we first convert the image to grayscale to calculate the luminance (brightness) of each pixel.
+                            The image is then divided into grid blocks, and the average luminance for each block is determined.
+                            We map this value to a character from a pre-defined set sorted by density (e.g., <code>$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~&lt;&gt;i!lI;:,"^`'. </code>) to reproduce the image using text.
+                        </p>
+                    </div>
+                </div>
+
                 <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm mb-20">
                     <h3 className="text-2xl font-bold text-slate-900 mb-6">How to Use</h3>
                     <ol className="list-decimal list-inside space-y-4 text-slate-700 font-medium">
@@ -372,12 +448,36 @@ const SeoContent: React.FC<{ lang: Language }> = ({ lang }) => {
     );
 };
 
-// --- 新規コンポーネント: 常時表示される法的情報 ---
-// これにより、クローラーが規約とプライバシーポリシーを確実に認識できるようにする
+// --- 新規コンポーネント: 常時表示される法的情報 + 運営者プロフィール ---
 const LegalInformation: React.FC<{ lang: Language, t: any }> = ({ lang, t }) => {
   return (
     <div className="w-full bg-slate-100 border-t border-slate-200 py-16 text-slate-600">
       <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 lg:grid-cols-3 gap-12">
+        <section id="profile" className="space-y-4">
+            <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
+                <span className="w-1.5 h-6 bg-emerald-500 rounded-full"></span>
+                {t('legal_contact_title')}
+            </h3>
+            <div className="p-6 bg-white rounded-xl border border-slate-200 shadow-sm">
+                <div className="flex items-center gap-4 mb-4">
+                    <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-xl font-bold text-slate-400">
+                        {t('profile_name').charAt(0).toUpperCase()}
+                    </div>
+                    <div>
+                        <p className="font-bold text-slate-900 text-lg">{t('profile_name')}</p>
+                        <p className="text-xs text-emerald-600 font-bold uppercase tracking-wider">{t('profile_title')}</p>
+                    </div>
+                </div>
+                <p className="text-sm leading-relaxed text-slate-600 mb-4">
+                    {t('profile_desc')}
+                </p>
+                <div className="pt-4 border-t border-slate-100">
+                     <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Contact</p>
+                     <a href="mailto:yuu758585@gmail.com" className="text-emerald-600 underline font-medium text-sm break-all">yuu758585@gmail.com</a>
+                </div>
+            </div>
+        </section>
+
         <section id="terms" className="space-y-4">
           <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
             <span className="w-1.5 h-6 bg-emerald-500 rounded-full"></span>
@@ -430,23 +530,6 @@ const LegalInformation: React.FC<{ lang: Language, t: any }> = ({ lang, t }) => 
                  <p className="mt-2">Advertising providers may use Cookies to display ads based on user interests. This includes information about past visits to this site and others.</p>
                  <p className="mt-2">Users can disable personalized ads in ad settings. You can also visit <a href="https://www.aboutads.info" target="_blank" rel="noreferrer" className="text-emerald-600 underline">www.aboutads.info</a> to opt-out of third-party vendor cookies used for personalized advertising.</p>
                  </>
-             )}
-          </div>
-        </section>
-
-        <section id="contact" className="space-y-4">
-          <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-emerald-500 rounded-full"></span>
-            {t('legal_contact_title')}
-          </h3>
-          <div className="text-sm leading-relaxed space-y-3 p-6 bg-white rounded-xl border border-slate-200 shadow-sm">
-             <p className="font-bold text-slate-800">Contact / 連絡先</p>
-             <p className="break-all">Email: <a href="mailto:yuu758585@gmail.com" className="text-emerald-600 underline font-medium">yuu758585@gmail.com</a></p>
-             {lang === 'ja' && (
-                 <p className="text-xs text-slate-400 mt-2">※ ツールに関するご質問やご要望、不具合の報告などがございましたら、上記メールアドレスまでお気軽にご連絡ください。</p>
-             )}
-             {lang === 'en' && (
-                 <p className="text-xs text-slate-400 mt-2">* Please feel free to contact us via the email address above for any questions, requests, or bug reports regarding this tool.</p>
              )}
           </div>
         </section>
@@ -1107,6 +1190,10 @@ export default function App(): React.ReactNode {
                 <span className="flex items-center gap-1.5"><CheckIcon className="w-4 h-4 text-emerald-500" /> {t('feature_privacy')}</span>
             </div>
         </div>
+      </div>
+      
+      <div className="max-w-3xl mx-auto px-6 pt-12 text-center text-slate-600 leading-relaxed text-sm">
+        <p>{t('intro_text')}</p>
       </div>
 
       <main className="max-w-6xl mx-auto w-full px-4 sm:px-6 py-16 flex-grow">
